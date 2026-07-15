@@ -1,0 +1,22 @@
+[package]
+name = "mdat-wasm"
+version = "0.1.0"
+edition = "2021"
+description = "WebAssembly bindings for ND2/CZI microscopy readers"
+license = "MIT"
+publish = false
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+czi-rs = { git = "https://github.com/keejkrej/czi-rs" }
+nd2-rs = { git = "https://github.com/keejkrej/nd2-rs" }
+js-sys = "0.3"
+serde = { version = "1.0", features = ["derive"] }
+serde-wasm-bindgen = "0.6"
+wasm-bindgen = "0.2"
+
+[profile.release]
+opt-level = "s"
+lto = true

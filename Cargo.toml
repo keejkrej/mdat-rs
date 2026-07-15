@@ -1,0 +1,3 @@
+[workspace]
+members = ["crates/mdat", "crates/mdat-wasm"]
+resolver = "2"
