@@ -3,8 +3,8 @@ use std::path::Path;
 use nd2_rs::Nd2File;
 use serde_json::{json, Value};
 
-use super::types::{axis_size, ImageInfo, MetadataPayload, ReaderAdapter, ReaderSession};
 use crate::error::{MdatError, Result};
+use crate::types::{axis_size, ImageInfo, MetadataPayload, ReaderAdapter, ReaderSession};
 
 pub struct Nd2ReaderAdapter;
 

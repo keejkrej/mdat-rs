@@ -6,7 +6,9 @@ use mdat::{
     preview_selection, run_convert, run_metadata, OutputFormat, ProgressCallback, ProgressEvent,
     ProgressPhase, Result,
 };
+use mdat::error::MdatError;
 use mdat::input::{inspect_input, open_input};
+use mdat_view::ViewArgs;
 
 #[derive(Parser)]
 #[command(name = "mdat", about = "Microscopy data utilities for ND2/CZI files.")]
@@ -42,6 +44,14 @@ enum Command {
         output: Option<PathBuf>,
         #[arg(long)]
         raw: bool,
+    },
+    /// Serve a local viewer for a microscopy dataset.
+    View {
+        input_file: PathBuf,
+        #[arg(long, default_value_t = 30, value_parser = clap::value_parser!(u64).range(1..))]
+        idle_timeout: u64,
+        #[arg(long)]
+        no_open: bool,
     },
 }
 
@@ -94,6 +104,19 @@ fn run() -> Result<()> {
             output,
             raw,
         } => run_metadata_command(&input_file, output.as_ref(), raw),
+        Command::View {
+            input_file,
+            idle_timeout,
+            no_open,
+        } => {
+            let rt = tokio::runtime::Runtime::new()?;
+            rt.block_on(mdat_view::run(ViewArgs {
+                path: input_file,
+                idle_timeout: Some(idle_timeout),
+                no_open,
+            }))
+                .map_err(|e| MdatError::InvalidInput(e.to_string()))
+        }
     }
 }
 

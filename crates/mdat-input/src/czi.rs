@@ -6,8 +6,8 @@ use czi_rs::CziFile;
 use roxmltree::Document;
 use serde_json::{json, Value};
 
-use super::types::{axis_size, ImageInfo, MetadataPayload, ReaderAdapter, ReaderSession};
 use crate::error::{MdatError, Result};
+use crate::types::{axis_size, ImageInfo, MetadataPayload, ReaderAdapter, ReaderSession};
 
 pub struct CziReaderAdapter;
 

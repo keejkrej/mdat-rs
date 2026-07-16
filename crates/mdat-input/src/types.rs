@@ -32,8 +32,8 @@ impl ReaderSession {
         info: ImageInfo,
         width: u32,
         height: u32,
-    read_frame: impl FnMut(usize, usize, usize, usize) -> Result<Vec<u16>> + 'static,
-    close: impl FnMut() -> Result<()> + 'static,
+        read_frame: impl FnMut(usize, usize, usize, usize) -> Result<Vec<u16>> + 'static,
+        close: impl FnMut() -> Result<()> + 'static,
     ) -> Self {
         Self {
             info,

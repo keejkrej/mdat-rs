@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>mdat view — build the frontend first</title>
+    <style>
+      body { font-family: ui-sans-serif, system-ui, sans-serif; background: #0a0a0a; color: #e5e5e5; margin: 2rem; line-height: 1.5; }
+      code { background: #1a1a1a; padding: 0.1rem 0.35rem; border-radius: 0.25rem; }
+      h1 { font-size: 1.25rem; }
+    </style>
+  </head>
+  <body>
+    <h1>mdat view</h1>
+    <p>The frontend bundle has not been built yet.</p>
+    <p>
+      Run <code>cd crates/mdat-view/web &amp;&amp; bun install &amp;&amp; bun run build</code>
+      (or <code>npm install &amp;&amp; npm run build</code>), then rebuild the binary.
+    </p>
+    <p>
+      Until then, the API at <code>/&lt;token&gt;/dataset</code> and
+      <code>/&lt;token&gt;/plane</code> still works.
+    </p>
+  </body>
+</html>

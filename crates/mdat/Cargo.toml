@@ -11,19 +11,17 @@ name = "mdat"
 path = "src/main.rs"
 
 [dependencies]
-czi-rs = { git = "https://github.com/keejkrej/czi-rs" }
-nd2-rs = { git = "https://github.com/keejkrej/nd2-rs" }
+mdat-input = { path = "../mdat-input" }
 clap = { version = "4.5", features = ["derive"] }
-roxmltree = "0.20"
-serde = { version = "1.0", features = ["derive"] }
+mdat-view = { path = "../mdat-view" }
 serde_json = "1.0"
 regex = "1.11"
-thiserror = "1.0"
 tiff = "0.11"
+tokio = { version = "1", features = ["rt-multi-thread"] }
 
 [features]
 default = []
-smb = ["nd2-rs/smb", "czi-rs/smb"]
+smb = ["mdat-input/smb"]
 
 [dev-dependencies]
 tempfile = "3.14"
