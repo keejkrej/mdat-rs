@@ -1,2 +1,6 @@
 node_modules/
-dist/
+# Keep a committed placeholder in dist/ so crates.io packages compile.
+# Real frontend builds may add more files here; ignore everything except
+# the placeholder index so we don't force-commit hashed JS assets.
+dist/*
+!dist/index.html
