@@ -1,21 +1,36 @@
 [package]
-name = "mdat"
+name = "mdat-rs"
 version = "0.2.0"
 edition = "2021"
 description = "Microscopy data utilities for ND2/CZI files (convert, metadata, optional viewer)"
 license = "MIT"
 repository = "https://github.com/keejkrej/mdat-rs"
 homepage = "https://github.com/keejkrej/mdat-rs"
-documentation = "https://docs.rs/mdat"
+documentation = "https://docs.rs/mdat-rs"
 readme = "../../README.md"
 keywords = ["microscopy", "nd2", "czi", "bioimaging", "cli"]
 categories = ["science", "command-line-utilities"]
-exclude = [".scratch/", "web/node_modules/", "web/src/", "web/tests/", "web/package.json", "web/bun.lock", "web/tsconfig.json", "web/vite.config.ts", "web/README.md"]
+exclude = [
+    ".scratch/",
+    "web/node_modules/",
+    "web/src/",
+    "web/tests/",
+    "web/package.json",
+    "web/bun.lock",
+    "web/tsconfig.json",
+    "web/vite.config.ts",
+    "web/README.md",
+]
+
+[lib]
+# Rust import path stays `mdat::…` (package name on crates.io is mdat-rs).
+name = "mdat"
+path = "src/lib.rs"
 
 [features]
 default = ["view"]
 # Local HTTP viewer (`mdat view`). Disable for a convert/metadata-only binary:
-#   cargo install mdat --no-default-features
+#   cargo install mdat-rs --no-default-features
 view = [
     "dep:axum",
     "dep:base64",
