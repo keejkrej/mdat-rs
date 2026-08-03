@@ -20,12 +20,6 @@ cargo build --release
 # Binary at target/release/mdat
 ```
 
-Build with SMB source support (reads ND2/CZI files over SMB):
-
-```bash
-cargo build --release --features smb
-```
-
 Build the WASM package (requires [`wasm-pack`](https://rustwasm.github.io/wasm-pack/)):
 
 ```bash

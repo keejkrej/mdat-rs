@@ -4,24 +4,25 @@ version = "0.1.0"
 edition = "2021"
 description = "Rust CLI for ND2/CZI microscopy data utilities"
 license = "MIT"
-repository = "https://github.com/keejkrej/mdat"
+repository = "https://github.com/keejkrej/mdat-rs"
+homepage = "https://github.com/keejkrej/mdat-rs"
+documentation = "https://docs.rs/mdat"
+readme = "../../README.md"
+keywords = ["microscopy", "nd2", "czi", "bioimaging", "cli"]
+categories = ["science", "command-line-utilities"]
 
 [[bin]]
 name = "mdat"
 path = "src/main.rs"
 
 [dependencies]
-mdat-input = { path = "../mdat-input" }
+mdat-input = { version = "0.1.0", path = "../mdat-input" }
 clap = { version = "4.5", features = ["derive"] }
-mdat-view = { path = "../mdat-view" }
+mdat-view = { version = "0.1.0", path = "../mdat-view" }
 serde_json = "1.0"
 regex = "1.11"
 tiff = "0.11"
 tokio = { version = "1", features = ["rt-multi-thread"] }
-
-[features]
-default = []
-smb = ["mdat-input/smb"]
 
 [dev-dependencies]
 tempfile = "3.14"

@@ -4,8 +4,12 @@ version = "0.1.0"
 edition = "2021"
 description = "Local viewer server for microscopy datasets"
 license = "MIT"
-repository = "https://github.com/keejkrej/mdat"
-publish = false
+repository = "https://github.com/keejkrej/mdat-rs"
+homepage = "https://github.com/keejkrej/mdat-rs"
+documentation = "https://docs.rs/mdat-view"
+readme = "../../README.md"
+keywords = ["microscopy", "viewer", "nd2", "czi"]
+categories = ["science", "command-line-utilities"]
 
 [lib]
 name = "mdat_view"
@@ -20,7 +24,7 @@ axum = { version = "0.8", features = ["macros"] }
 base64 = "0.22"
 clap = { version = "4.5", features = ["derive"] }
 include_dir = { version = "0.7", features = ["glob"] }
-mdat-input = { path = "../mdat-input" }
+mdat-input = { version = "0.1.0", path = "../mdat-input" }
 rand = "0.8"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
