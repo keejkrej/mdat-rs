@@ -11,8 +11,8 @@ use axum::response::{IntoResponse, Response};
 use axum::routing::get;
 use axum::Router;
 use clap::Args;
-use mdat_input::types::{ImageInfo, MetadataPayload};
-use mdat_input::{ensure_input_exists, resolve_reader_adapter};
+use crate::input::types::{ImageInfo, MetadataPayload};
+use crate::input::{ensure_input_exists, resolve_reader_adapter};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use thiserror::Error;
@@ -49,7 +49,7 @@ pub enum ViewError {
     #[error(transparent)]
     Io(#[from] std::io::Error),
     #[error(transparent)]
-    Input(#[from] mdat_input::MdatError),
+    Input(#[from] crate::error::MdatError),
     #[error("{0}")]
     Other(String),
 }
@@ -208,11 +208,11 @@ enum SessionCmd {
         t: usize,
         c: usize,
         z: usize,
-        reply: oneshot::Sender<mdat_input::Result<Vec<u16>>>,
+        reply: oneshot::Sender<crate::error::Result<Vec<u16>>>,
     },
 }
 
-struct SendableSession(mdat_input::types::ReaderSession);
+struct SendableSession(crate::input::types::ReaderSession);
 // SAFETY: The ReaderSession holds `Box<dyn FnMut>` closures that may capture
 // non-Send types (e.g. ND2 SDK handles). We assert Send here because the session
 // is pinned to a single dedicated OS thread (see `SessionHandle::spawn`): it is
@@ -228,7 +228,7 @@ impl SendableSession {
         t: usize,
         c: usize,
         z: usize,
-    ) -> mdat_input::Result<Vec<u16>> {
+    ) -> crate::error::Result<Vec<u16>> {
         self.0.read_frame(p, t, c, z)
     }
 }
@@ -241,7 +241,7 @@ struct SessionHandle {
 }
 
 impl SessionHandle {
-    fn spawn(session: mdat_input::types::ReaderSession) -> Arc<Self> {
+    fn spawn(session: crate::input::types::ReaderSession) -> Arc<Self> {
         let info = session.info;
         let width = session.width;
         let height = session.height;
@@ -276,10 +276,10 @@ impl SessionHandle {
         t: usize,
         c: usize,
         z: usize,
-    ) -> mdat_input::Result<Vec<u16>> {
+    ) -> crate::error::Result<Vec<u16>> {
         let (reply_tx, reply_rx) = oneshot::channel();
         let tx = self.tx.lock().unwrap().clone().ok_or_else(|| {
-            mdat_input::MdatError::InvalidInput("reader session closed".to_string())
+            crate::error::MdatError::InvalidInput("reader session closed".to_string())
         })?;
         tx.send(SessionCmd::ReadFrame {
             p,
@@ -289,12 +289,12 @@ impl SessionHandle {
             reply: reply_tx,
         })
         .map_err(|_| {
-            mdat_input::MdatError::InvalidInput("reader thread exited".to_string())
+            crate::error::MdatError::InvalidInput("reader thread exited".to_string())
         })?;
         reply_rx
             .await
             .map_err(|_| {
-                mdat_input::MdatError::InvalidInput("reader thread dropped reply".to_string())
+                crate::error::MdatError::InvalidInput("reader thread dropped reply".to_string())
             })
             .and_then(|r| r)
     }

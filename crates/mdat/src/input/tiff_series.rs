@@ -7,7 +7,7 @@ use serde_json::{json, Value};
 use tiff::decoder::{Decoder, DecodingResult};
 
 use crate::error::{MdatError, Result};
-use crate::types::{ImageInfo, MetadataPayload, ReaderAdapter, ReaderSession};
+use super::types::{ImageInfo, MetadataPayload, ReaderAdapter, ReaderSession};
 
 const EXPECTED_PATTERN: &str = "img_channel{c:03}_position{p:03}_time{t:09}_z{z:03}.tif";
 pub(crate) const TIFF_SERIES_EXPECTED_PATTERN: &str = EXPECTED_PATTERN;
@@ -185,7 +185,7 @@ fn resolve_layout(input_path: &Path) -> Result<ResolvedLayout> {
         });
     }
     Err(MdatError::UnsupportedFormat {
-        suffix: crate::registry::location_suffix(input_path),
+        suffix: super::registry::location_suffix(input_path),
     })
 }
 
@@ -412,8 +412,8 @@ fn filename_regex() -> Regex {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::registry::{ensure_input_exists, resolve_reader_adapter};
-    use crate::ReaderAdapter;
+    use crate::input::registry::{ensure_input_exists, resolve_reader_adapter};
+    use crate::input::types::ReaderAdapter;
     use std::fs::File;
     use std::path::Path;
     use std::fs;

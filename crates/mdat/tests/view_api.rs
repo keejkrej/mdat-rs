@@ -1,10 +1,11 @@
+#![cfg(feature = "view")]
 use std::fs::File;
 use std::path::Path;
 use std::time::Duration;
 
-use mdat_view::__test_run;
-use mdat_view::__test_setup;
-use mdat_view::ViewArgs;
+use mdat::view::__test_run;
+use mdat::view::__test_setup;
+use mdat::view::ViewArgs;
 use serde_json::Value;
 use tempfile::tempdir;
 use tiff::encoder::{colortype, TiffEncoder};
@@ -48,7 +49,7 @@ fn write_mdat_tree(root: &Path, n_pos: usize, n_time: usize, n_chan: usize, n_z:
     }
 }
 
-async fn boot_server(path: &Path, idle_timeout: Option<u64>) -> (mdat_view::ServerSetup, String) {
+async fn boot_server(path: &Path, idle_timeout: Option<u64>) -> (mdat::view::ServerSetup, String) {
     let args = ViewArgs {
         path: path.to_path_buf(),
         idle_timeout,
@@ -375,7 +376,7 @@ async fn fake_czi_file_fails_setup_without_panic() {
 
 #[tokio::test(flavor = "multi_thread")]
 async fn nd2_suffix_dispatches_to_nd2_adapter_at_resolve_time() {
-    use mdat_input::resolve_reader_adapter;
+    use mdat::input::resolve_reader_adapter;
     let dir = tempdir().unwrap();
     let nd2 = dir.path().join("anything.nd2");
     std::fs::write(&nd2, b"x").unwrap();
@@ -385,7 +386,7 @@ async fn nd2_suffix_dispatches_to_nd2_adapter_at_resolve_time() {
 
 #[tokio::test(flavor = "multi_thread")]
 async fn czi_suffix_dispatches_to_czi_adapter_at_resolve_time() {
-    use mdat_input::resolve_reader_adapter;
+    use mdat::input::resolve_reader_adapter;
     let dir = tempdir().unwrap();
     let czi = dir.path().join("anything.czi");
     std::fs::write(&czi, b"x").unwrap();

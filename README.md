@@ -8,8 +8,19 @@ ND2 (Nikon) and CZI (Zeiss) microscopy files. **mdat** stands for
 
 | Crate | Description |
 | --- | --- |
-| `crates/mdat` | Rust CLI for ND2/CZI microscopy data utilities. |
-| `crates/mdat-wasm` | WebAssembly bindings for ND2/CZI microscopy readers. |
+| `crates/mdat` | Single published crate: CLI + library (`convert`, `metadata`, optional `view`) |
+| `crates/mdat-wasm` | WebAssembly bindings (not published to crates.io) |
+
+### Features (`mdat`)
+
+| Feature | Default | What it enables |
+| --- | --- | --- |
+| `view` | yes | `mdat view` local HTTP viewer (axum + embedded UI) |
+
+```bash
+cargo install mdat
+cargo install mdat --no-default-features   # convert + metadata only
+```
 
 ## Build
 

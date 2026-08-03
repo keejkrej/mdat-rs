@@ -1,8 +1,8 @@
 [package]
 name = "mdat"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
-description = "Rust CLI for ND2/CZI microscopy data utilities"
+description = "Microscopy data utilities for ND2/CZI files (convert, metadata, optional viewer)"
 license = "MIT"
 repository = "https://github.com/keejkrej/mdat-rs"
 homepage = "https://github.com/keejkrej/mdat-rs"
@@ -10,19 +10,52 @@ documentation = "https://docs.rs/mdat"
 readme = "../../README.md"
 keywords = ["microscopy", "nd2", "czi", "bioimaging", "cli"]
 categories = ["science", "command-line-utilities"]
+exclude = [".scratch/", "web/node_modules/", "web/src/", "web/tests/", "web/package.json", "web/bun.lock", "web/tsconfig.json", "web/vite.config.ts", "web/README.md"]
+
+[features]
+default = ["view"]
+# Local HTTP viewer (`mdat view`). Disable for a convert/metadata-only binary:
+#   cargo install mdat --no-default-features
+view = [
+    "dep:axum",
+    "dep:base64",
+    "dep:include_dir",
+    "dep:rand",
+    "dep:tower",
+    "tokio/macros",
+    "tokio/net",
+    "tokio/signal",
+    "tokio/time",
+    "tokio/sync",
+]
 
 [[bin]]
 name = "mdat"
 path = "src/main.rs"
 
 [dependencies]
-mdat-input = { version = "0.1.0", path = "../mdat-input" }
+czi-rs = "0.2"
+nd2-rs = "0.2"
 clap = { version = "4.5", features = ["derive"] }
-mdat-view = { version = "0.1.0", path = "../mdat-view" }
-serde_json = "1.0"
 regex = "1.11"
+roxmltree = "0.20"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+thiserror = "1.0"
 tiff = "0.11"
 tokio = { version = "1", features = ["rt-multi-thread"] }
 
+# view feature
+axum = { version = "0.8", features = ["macros"], optional = true }
+base64 = { version = "0.22", optional = true }
+include_dir = { version = "0.7", features = ["glob"], optional = true }
+rand = { version = "0.8", optional = true }
+tower = { version = "0.5", optional = true }
+
 [dev-dependencies]
+reqwest = { version = "0.13", default-features = false, features = ["json"] }
 tempfile = "3.14"
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "net", "time", "sync"] }
+
+[package.metadata.docs.rs]
+all-features = true

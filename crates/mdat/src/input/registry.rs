@@ -1,10 +1,10 @@
 use std::path::{Path, PathBuf};
 
 use crate::error::{MdatError, Result};
-use crate::czi::CziReaderAdapter;
-use crate::nd2::Nd2ReaderAdapter;
-use crate::tiff_series::{TiffSeriesReaderAdapter, TIFF_SERIES_EXPECTED_PATTERN};
-use crate::types::ReaderAdapter;
+use super::czi::CziReaderAdapter;
+use super::nd2::Nd2ReaderAdapter;
+use super::tiff_series::{TiffSeriesReaderAdapter, TIFF_SERIES_EXPECTED_PATTERN};
+use super::types::ReaderAdapter;
 
 pub fn location_suffix(path: &Path) -> String {
     path.extension()

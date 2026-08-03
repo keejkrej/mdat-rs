@@ -1,8 +1,8 @@
 use std::path::Path;
 
 use crate::error::Result;
-use crate::registry::resolve_reader_adapter;
-use crate::types::{ImageInfo, ReaderSession};
+use super::registry::resolve_reader_adapter;
+use super::types::{ImageInfo, ReaderSession};
 
 pub fn inspect_input(input_path: &Path) -> Result<ImageInfo> {
     resolve_reader_adapter(input_path)?.inspect(input_path)
