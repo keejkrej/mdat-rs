@@ -53,18 +53,15 @@ impl OutputFormatWriter for MdatOutputFormat {
             let pos_dir = output.join(format!("Pos{p_idx}"));
             std::fs::create_dir_all(&pos_dir)?;
 
-            let mut time_map = String::from("t,t_real\n");
-            for (t_new, &t_orig) in selection.time_indices.iter().enumerate() {
-                time_map.push_str(&format!("{t_new},{t_orig}\n"));
-            }
-            std::fs::write(pos_dir.join("time_map.csv"), time_map)?;
-
-            for (t_new, &t_orig) in selection.time_indices.iter().enumerate() {
+            // Use original source time indices in filenames (gaps allowed).
+            // Downstream tools (e.g. lisca folder source) discover times from
+            // names and support non-contiguous series — no time_map renumbering.
+            for &t_orig in &selection.time_indices {
                 for &c_orig in &selection.channel_indices {
                     for &z_orig in &selection.z_indices {
                         let frame = session.read_frame(p_idx, t_orig, c_orig, z_orig)?;
                         let filename = format!(
-                            "img_channel{c_orig:03}_position{p_idx:03}_time{t_new:09}_z{z_orig:03}.tif"
+                            "img_channel{c_orig:03}_position{p_idx:03}_time{t_orig:09}_z{z_orig:03}.tif"
                         );
                         write_tiff(
                             &pos_dir.join(filename),

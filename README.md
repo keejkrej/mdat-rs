@@ -84,9 +84,10 @@ confirmation.
 - Mix slices and indices — e.g. `0:5,10`.
 
 Indices are **0-based** and refer to the original axis order in the source file.
-For timepoints, exported filenames use a **renumbered** index (`t_new`: 0, 1, …)
-while `time_map.csv` (mdat layout) records the mapping back to the original
-indices.
+Exported filenames keep the **original** time (and channel / z / position) indices
+from the source — subsets and strides leave gaps (e.g. `--time 0:181:6` yields
+`time000000000`, `time000000006`, …). Downstream folder scanners that support
+frame gaps (e.g. lisca) can use the names directly; no `time_map.csv` renumbering.
 
 #### Output layout: `mdat` (default)
 
@@ -95,15 +96,12 @@ One folder per position, one TIFF per `(channel, time, z)` frame:
 ```
 out/
   Pos0/
-    time_map.csv
     img_channel000_position000_time000000000_z000.tif
-    img_channel000_position000_time000000001_z000.tif
+    img_channel000_position000_time000000006_z000.tif
     ...
   Pos1/
     ...
 ```
-
-`time_map.csv` columns: `t` (exported index), `t_real` (original timepoint index).
 
 #### Output layout: `acdc`
 
