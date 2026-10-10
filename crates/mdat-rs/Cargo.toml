@@ -49,8 +49,8 @@ name = "mdat"
 path = "src/main.rs"
 
 [dependencies]
-czi-rs = "0.2"
-nd2-rs = "0.2"
+czi = { git = "https://github.com/keejkrej/czi-rs" }
+nd2 = { git = "https://github.com/keejkrej/nd2-rs" }
 clap = { version = "4.5", features = ["derive"] }
 regex = "1.11"
 roxmltree = "0.20"

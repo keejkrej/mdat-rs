@@ -2,7 +2,7 @@ use std::fs::File;
 use std::io::{Read, Seek, SeekFrom};
 use std::path::Path;
 
-use czi_rs::CziFile;
+use czi::CziFile;
 use roxmltree::Document;
 use serde_json::{json, Value};
 
@@ -59,7 +59,7 @@ impl ReaderAdapter for CziReaderAdapter {
     }
 }
 
-fn image_info_from_summary(summary: &czi_rs::DatasetSummary) -> Result<ImageInfo> {
+fn image_info_from_summary(summary: &czi::DatasetSummary) -> Result<ImageInfo> {
     let n_pos = {
         let scenes = axis_size(&summary.sizes, "S");
         if scenes > 1 {
@@ -77,7 +77,7 @@ fn image_info_from_summary(summary: &czi_rs::DatasetSummary) -> Result<ImageInfo
     })
 }
 
-fn normalized_metadata_from_summary(summary: &czi_rs::DatasetSummary) -> Value {
+fn normalized_metadata_from_summary(summary: &czi::DatasetSummary) -> Value {
     let channels: Vec<Value> = summary
         .channels
         .iter()
@@ -144,7 +144,7 @@ fn normalized_metadata_from_summary(summary: &czi_rs::DatasetSummary) -> Value {
     })
 }
 
-fn normalized_metadata_from_xml(raw: &str, summary: &czi_rs::DatasetSummary) -> Result<Value> {
+fn normalized_metadata_from_xml(raw: &str, summary: &czi::DatasetSummary) -> Result<Value> {
     let mut value = normalized_metadata_from_summary(summary);
     let doc = Document::parse(raw).map_err(|err| {
         MdatError::InvalidInput(format!("failed to parse CZI metadata XML: {err}"))
@@ -180,7 +180,7 @@ fn normalized_metadata_from_xml(raw: &str, summary: &czi_rs::DatasetSummary) -> 
     Ok(value)
 }
 
-fn parse_channels(image_node: Option<roxmltree::Node<'_, '_>>, summary: &czi_rs::DatasetSummary) -> Vec<Value> {
+fn parse_channels(image_node: Option<roxmltree::Node<'_, '_>>, summary: &czi::DatasetSummary) -> Vec<Value> {
     let display_by_id = parse_display_channels(image_node);
     let image_channels = image_node
         .and_then(|node| find_path(node, &["Dimensions", "Channels"]))
