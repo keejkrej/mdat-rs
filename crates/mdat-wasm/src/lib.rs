@@ -3,9 +3,9 @@ use std::collections::HashMap;
 use std::io::Cursor;
 use std::sync::atomic::{AtomicU32, Ordering};
 
-use czi_rs::CziFile;
+use czi::CziFile;
 use js_sys::{Object, Reflect, Uint16Array};
-use nd2_rs::Nd2File;
+use nd2::Nd2File;
 use serde::Serialize;
 use wasm_bindgen::prelude::*;
 #[derive(Debug, Clone, Copy, Serialize)]

@@ -247,10 +247,9 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "460fbee9c2c2f33933d720630a6a0bac33ba7053db5344fac858d4b8952d77d5"
 
 [[package]]
-name = "czi-rs"
+name = "czi"
 version = "0.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "291b70e2b0ae017794626b48dc87ecd7d90ebab8e1f8d7faf4753cb0d03d4dc7"
+source = "git+https://github.com/keejkrej/czi-rs#ea070149699644a190958f8b5f11e6afec8806f1"
 dependencies = [
  "roxmltree",
  "thiserror",
@@ -681,9 +680,9 @@ dependencies = [
  "axum",
  "base64",
  "clap",
- "czi-rs",
+ "czi",
  "include_dir",
- "nd2-rs",
+ "nd2",
  "rand",
  "regex",
  "reqwest",
@@ -701,9 +700,9 @@ dependencies = [
 name = "mdat-wasm"
 version = "0.1.0"
 dependencies = [
- "czi-rs",
+ "czi",
  "js-sys",
- "nd2-rs",
+ "nd2",
  "serde",
  "serde-wasm-bindgen",
  "wasm-bindgen",
@@ -743,10 +742,9 @@ dependencies = [
 ]
 
 [[package]]
-name = "nd2-rs"
+name = "nd2"
 version = "0.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "af1f39608b2d09efa5b600a92f0f86f92b56a2e7f4945e9b39d9c6243059fbd3"
+source = "git+https://github.com/keejkrej/nd2-rs#599c14d19bbeb5314ba841674717022f3379b28d"
 dependencies = [
  "byteorder",
  "flate2",

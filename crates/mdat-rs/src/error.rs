@@ -7,9 +7,9 @@ pub type Result<T> = std::result::Result<T, MdatError>;
 #[derive(Debug, Error)]
 pub enum MdatError {
     #[error(transparent)]
-    Nd2(#[from] nd2_rs::Nd2Error),
+    Nd2(#[from] nd2::Nd2Error),
     #[error(transparent)]
-    Czi(#[from] czi_rs::CziError),
+    Czi(#[from] czi::CziError),
     #[error(transparent)]
     Io(#[from] std::io::Error),
     #[error(transparent)]

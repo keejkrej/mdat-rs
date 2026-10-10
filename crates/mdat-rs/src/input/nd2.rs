@@ -1,6 +1,6 @@
 use std::path::Path;
 
-use nd2_rs::Nd2File;
+use nd2::Nd2File;
 use serde_json::{json, Value};
 
 use crate::error::{MdatError, Result};
@@ -49,7 +49,7 @@ impl ReaderAdapter for Nd2ReaderAdapter {
     }
 }
 
-fn image_info_from_summary(summary: &nd2_rs::DatasetSummary) -> Result<ImageInfo> {
+fn image_info_from_summary(summary: &nd2::DatasetSummary) -> Result<ImageInfo> {
     Ok(ImageInfo {
         n_pos: axis_size(&summary.sizes, "P"),
         n_time: axis_size(&summary.sizes, "T"),
@@ -58,7 +58,7 @@ fn image_info_from_summary(summary: &nd2_rs::DatasetSummary) -> Result<ImageInfo
     })
 }
 
-fn normalized_metadata(summary: &nd2_rs::DatasetSummary) -> Value {
+fn normalized_metadata(summary: &nd2::DatasetSummary) -> Value {
     let channels: Vec<Value> = summary
         .channels
         .iter()
