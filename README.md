@@ -1,25 +1,13 @@
 # mdat-rs (microscopy data, Rust)
 
-Rust workspace for **mdat**: a native CLI and WebAssembly bindings for reading
-ND2 (Nikon) and CZI (Zeiss) microscopy files. **mdat** stands for
-**microscopy data**.
+**mdat** is a Rust CLI and library for converting Nikon ND2 and Zeiss CZI
+microscopy files to TIFF and inspecting their metadata. It also reads TIFF
+series in the `mdat` output layout.
 
-## Workspace
-
-| Crate | Description |
-| --- | --- |
-| `crates/mdat-rs` | Single published crate: CLI + library (`convert`, `metadata`, optional `view`) |
-| `crates/mdat-wasm` | WebAssembly bindings (not published to crates.io) |
-
-### Features (`mdat-rs`)
-
-| Feature | Default | What it enables |
-| --- | --- | --- |
-| `view` | yes | `mdat view` local HTTP viewer (axum + embedded UI) |
+## Install
 
 ```bash
 cargo install mdat-rs
-cargo install mdat-rs --no-default-features   # convert + metadata only
 ```
 
 ## Build
@@ -29,13 +17,6 @@ Build the CLI:
 ```bash
 cargo build --release
 # Binary at target/release/mdat
-```
-
-Build the WASM package (requires [`wasm-pack`](https://rustwasm.github.io/wasm-pack/)):
-
-```bash
-./scripts/build-wasm.sh
-# Output at crates/mdat-wasm/pkg/
 ```
 
 ## CLI usage
@@ -147,10 +128,3 @@ mdat metadata sample.czi --raw --output sample.metadata.xml
 | --- | --- |
 | `-o`, `--output` | Write to this file instead of stdout. |
 | `--raw` | Export the native metadata payload instead of normalized JSON. |
-
-## WASM bindings
-
-The `mdat-wasm` crate exposes the ND2/CZI readers to JavaScript via
-[`wasm-bindgen`](https://rustwasm.github.io/wasm-bindgen/). After running
-`./scripts/build-wasm.sh`, import the generated package from
-`crates/mdat-wasm/pkg/`.
