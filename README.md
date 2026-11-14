@@ -1,4 +1,4 @@
-# mdat-rs (microscopy data, Rust)
+# mdat (microscopy data, Rust)
 
 **mdat** is a Rust CLI and library for converting Nikon ND2 and Zeiss CZI
 microscopy files to TIFF and inspecting their metadata. It also reads TIFF
@@ -7,7 +7,7 @@ series in the `mdat` output layout.
 ## Install
 
 ```bash
-cargo install mdat-rs
+cargo install mdat
 ```
 
 ## Build

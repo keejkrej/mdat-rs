@@ -1,23 +1,14 @@
 [package]
-name = "mdat-rs"
+name = "mdat"
 version = "1.0.0"
 edition = "2021"
 description = "Convert microscopy data to TIFF and inspect metadata"
 license = "MIT"
 repository = "https://github.com/keejkrej/mdat-rs"
-documentation = "https://docs.rs/mdat-rs"
+documentation = "https://docs.rs/mdat"
 readme = "../../README.md"
 keywords = ["microscopy", "nd2", "czi", "bioimaging", "cli"]
 categories = ["science", "command-line-utilities"]
-
-[lib]
-# Rust import path stays `mdat::…` (package name on crates.io is mdat-rs).
-name = "mdat"
-path = "src/lib.rs"
-
-[[bin]]
-name = "mdat"
-path = "src/main.rs"
 
 [dependencies]
 czi = "1.0"
